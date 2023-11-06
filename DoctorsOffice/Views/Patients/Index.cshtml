@@ -16,8 +16,8 @@ else
   <ul>
     @foreach (Patient patient in Model)
     {
-      @* <li>@Html.ActionLink($"{patient.Name}", "Details", new { id = patient.PatientId }) | @patient.Doctor.Name</li> *@
-      <li>@patient.Name | @patient.Birthdate</li>
+      <li>@Html.ActionLink($"{patient.Name}", "Details", new { id = patient.PatientId }) | @patient.Doctor.Name</li>
+      @* <li>@patient.Name | @patient.Birthdate | @patient.Doctor.Name</li> *@
     }
   </ul>
 }
