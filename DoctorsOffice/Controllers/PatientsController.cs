@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace DoctorsOffice.Controllers
 {
@@ -42,8 +43,32 @@ namespace DoctorsOffice.Controllers
 
     public ActionResult Details(int id)
     {
-      Patient thisPatient = _db.Patients.Include(patient => patient.Doctor).Include(patient => patient.JoinEntities).FirstOrDefault(patient => patient.PatientId == id);
+      Patient thisPatient = _db.Patients
+        .Include(patient => patient.JoinEntities)
+        .ThenInclude(patient => patient.Doctor)
+        .FirstOrDefault(patient => patient.PatientId == id);
       return View(thisPatient);
+    }
+
+    public ActionResult AddDoctor(int id)
+    {
+      Patient thisPatient = _db.Patients.FirstOrDefault(patients => patients.PatientId == id);
+      ViewBag.DoctorId = new SelectList(_db.Doctors, "DoctorId", "Name");
+      return View(thisPatient);
+    }
+
+    [HttpPost]
+    public ActionResult AddDoctor(Patient patient, int doctorId)
+    {
+      #nullable enable
+      DoctorPatient? joinEntity = _db.DoctorPatient.FirstOrDefault(join => (join.DoctorPatientId == doctorId && join.PatientId == patient.PatientId));
+      #nullable disable
+      if (joinEntity == null && doctorId != 0)
+      {
+        _db.DoctorPatient.Add(new DoctorPatient() { DoctorId = doctorId, PatientId = patient.PatientId });
+        _db.SaveChanges();
+      }
+      return RedirectToAction("Details", new { id = patient.PatientId });
     }
   }
 }

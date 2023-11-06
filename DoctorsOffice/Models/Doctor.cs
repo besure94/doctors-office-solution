@@ -8,5 +8,6 @@ namespace DoctorsOffice.Models
     public string Name { get; set; }
     public string Specialty { get; set; }
     public List<Patient> Patients { get; set; }
+    public List<DoctorPatient> JoinEntities { get; }
   }
 }

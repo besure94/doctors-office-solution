@@ -15,7 +15,6 @@
   @foreach (Doctor doctor in Model)
   {
     <li>@Html.ActionLink($"{doctor.Name}", "Details", new { id = doctor.DoctorId })</li>
-    @* <li>@doctor.Name | @doctor.Specialty</li> *@
   }
 </ul>
 

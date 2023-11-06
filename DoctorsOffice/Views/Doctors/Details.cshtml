@@ -10,30 +10,16 @@
 <hr/>
 <h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h3>
 
-@if (@Model.Patients.Count == 0)
+@if (@Model.JoinEntities.Count == 0)
 {
   <h3>This doctor does not have any patients.</h3>
 }
 else {
   <h4>Patients that this doctor sees:</h4>
   <ul>
-    @foreach (Patient patient in Model.Patients)
+    @foreach (DoctorPatient join in Model.JoinEntities)
     {
-      string doctorPatients = "";
-      @if(patient.JoinEntities.Count == 0)
-      {
-        doctorPatients = "This patient does not see any doctors.";
-      }
-      else
-      {
-        List<string> doctorPatientList = new List<string>();
-          @foreach(DoctorPatient join in patient.JoinEntities)
-          {
-            doctorPatientList.Add(join.Doctor.Name);
-          }
-          doctorPatients = String.Join(", ", doctorPatientList);
-      }
-      <li>@patient.Name | Doctors: @doctorPatients</li>
+      <li>@join.Patient.Name</li>
     }
   </ul>
 }

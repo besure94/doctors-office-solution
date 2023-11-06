@@ -35,7 +35,10 @@ namespace DoctorsOffice.Controllers
 
     public ActionResult Details(int id)
     {
-      Doctor thisDoctor = _db.Doctors.Include(doctor => doctor.Patients).ThenInclude(patient => patient.JoinEntities).FirstOrDefault(doctor => doctor.DoctorId == id);
+      Doctor thisDoctor = _db.Doctors
+      .Include(patient => patient.JoinEntities)
+      .ThenInclude(doctor => doctor.Patient)
+      .FirstOrDefault(doctor => doctor.DoctorId == id);
       return View(thisDoctor);
     }
   }
