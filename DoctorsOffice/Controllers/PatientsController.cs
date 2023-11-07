@@ -36,9 +36,14 @@ namespace DoctorsOffice.Controllers
       {
         return RedirectToAction("Create");
       }
-      _db.Patients.Add(patient);
-      _db.SaveChanges();
-      return RedirectToAction("Index");
+      else
+      {
+        _db.Patients.Add(patient);
+        _db.SaveChanges();
+        _db.DoctorPatient.Add(new DoctorPatient() { DoctorId = patient.DoctorId, PatientId = patient.PatientId });
+        _db.SaveChanges();
+        return RedirectToAction("Index");
+      }
     }
 
     public ActionResult Details(int id)
