@@ -28,9 +28,16 @@ namespace DoctorsOffice.Controllers
     [HttpPost]
     public ActionResult Create(Doctor doctor)
     {
-      _db.Doctors.Add(doctor);
-      _db.SaveChanges();
-      return RedirectToAction("Index");
+      if (doctor.Name == null || doctor.Specialty == null)
+      {
+        return RedirectToAction("Create");
+      }
+      else
+      {
+        _db.Doctors.Add(doctor);
+        _db.SaveChanges();
+        return RedirectToAction("Index");
+      }
     }
 
     public ActionResult Details(int id)
