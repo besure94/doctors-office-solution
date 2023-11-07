@@ -32,7 +32,7 @@ namespace DoctorsOffice.Controllers
     [HttpPost]
     public ActionResult Create (Patient patient)
     {
-      if (patient.DoctorId == 0)
+      if (patient.DoctorId == 0 || patient.Name == null)
       {
         return RedirectToAction("Create");
       }
