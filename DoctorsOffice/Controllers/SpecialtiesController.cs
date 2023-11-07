@@ -21,5 +21,27 @@ namespace DoctorsOffice.Controllers
       List<Specialty> model = _db.Specialties.ToList();
       return View(model);
     }
+
+    public ActionResult Create()
+    {
+      return View();
+    }
+
+    [HttpPost]
+    public ActionResult Create(Specialty specialty)
+    {
+      if (specialty.Title == null)
+      {
+        return RedirectToAction("Create");
+      }
+      else
+      {
+        // specialty.DoctorId = 0;
+        _db.Specialties.Add(specialty);
+        _db.SaveChanges();
+        // _db.DoctorSpecialties.Add(new DoctorSpecialty() { DoctorId = specialty.DoctorId, SpecialtyId = specialty.SpecialtyId });
+        return RedirectToAction("Index");
+      }
+    }
   }
 }

@@ -6,9 +6,9 @@ namespace DoctorsOffice.Models
   public class Specialty
   {
     public int SpecialtyId { get; set; }
-    public int DoctorId { get; set; }
+    // public int DoctorId { get; set; }
     public string Title { get; set; }
-    public Doctor Doctor { get; set; }
+    // public Doctor Doctor { get; set; }
     public List<DoctorSpecialty> JoinClasses { get; }
 
   }
