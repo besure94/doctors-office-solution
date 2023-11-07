@@ -28,7 +28,7 @@ namespace DoctorsOffice.Controllers
     [HttpPost]
     public ActionResult Create(Doctor doctor)
     {
-      if (doctor.Name == null || doctor.Specialty == null)
+      if (doctor.Name == null)
       {
         return RedirectToAction("Create");
       }
