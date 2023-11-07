@@ -40,7 +40,7 @@ namespace DoctorsOffice.Controllers
       {
         _db.Patients.Add(patient);
         _db.SaveChanges();
-        _db.DoctorPatient.Add(new DoctorPatient() { DoctorId = patient.DoctorId, PatientId = patient.PatientId });
+        _db.DoctorPatients.Add(new DoctorPatient() { DoctorId = patient.DoctorId, PatientId = patient.PatientId });
         _db.SaveChanges();
         return RedirectToAction("Index");
       }
@@ -66,11 +66,11 @@ namespace DoctorsOffice.Controllers
     public ActionResult AddDoctor(Patient patient, int doctorId)
     {
       #nullable enable
-      DoctorPatient? joinEntity = _db.DoctorPatient.FirstOrDefault(join => (join.DoctorPatientId == doctorId && join.PatientId == patient.PatientId));
+      DoctorPatient? joinEntity = _db.DoctorPatients.FirstOrDefault(join => (join.DoctorPatientId == doctorId && join.PatientId == patient.PatientId));
       #nullable disable
       if (joinEntity == null && doctorId != 0)
       {
-        _db.DoctorPatient.Add(new DoctorPatient() { DoctorId = doctorId, PatientId = patient.PatientId });
+        _db.DoctorPatients.Add(new DoctorPatient() { DoctorId = doctorId, PatientId = patient.PatientId });
         _db.SaveChanges();
       }
       return RedirectToAction("Details", new { id = patient.PatientId });
