@@ -24,5 +24,20 @@ else
     }
   </ul>
 }
+
+@if (@Model.JoinClasses.Count == 0)
+{
+  <h3>This doctor does not have any specialties.</h3>
+}
+else
+{
+  <h4>Specialties this doctor has:</h4>
+  <ul>
+    @foreach (DoctorSpecialty join in Model.JoinClasses)
+    {
+      <li>@join.Specialty.Title</li>
+    }
+  </ul>
+}
 <p>@Html.ActionLink("Add new patient", "Create", "Patients")</p>
 <p>@Html.ActionLink("Back to doctors list", "Index")</p>
