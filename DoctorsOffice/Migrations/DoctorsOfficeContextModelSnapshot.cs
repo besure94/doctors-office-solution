@@ -144,7 +144,7 @@ namespace DoctorsOffice.Migrations
                         .IsRequired();
 
                     b.HasOne("DoctorsOffice.Models.Specialty", "Specialty")
-                        .WithMany()
+                        .WithMany("JoinClasses")
                         .HasForeignKey("SpecialtyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -186,6 +186,11 @@ namespace DoctorsOffice.Migrations
             modelBuilder.Entity("DoctorsOffice.Models.Patient", b =>
                 {
                     b.Navigation("JoinEntities");
+                });
+
+            modelBuilder.Entity("DoctorsOffice.Models.Specialty", b =>
+                {
+                    b.Navigation("JoinClasses");
                 });
 #pragma warning restore 612, 618
         }
