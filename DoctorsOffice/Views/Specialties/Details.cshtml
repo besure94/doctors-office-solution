@@ -16,7 +16,7 @@
 }
 else
 {
-  <h4>Doctors who have this specialty:</h4>
+  <h4>Doctors who work in this specialty:</h4>
   <ul>
     @foreach (DoctorSpecialty join in Model.JoinClasses)
     {
@@ -24,5 +24,6 @@ else
     }
   </ul>
 }
-<p>@Html.ActionLink("Add new doctor", "Create", "Doctors")</p>
+<p>@Html.ActionLink("Add a doctor", "AddDoctor", new { id = Model.SpecialtyId })</p>
+<p>@Html.ActionLink("Create a new doctor", "Create", "Doctors")</p>
 <p>@Html.ActionLink("Back to specialties list", "Index")</p>

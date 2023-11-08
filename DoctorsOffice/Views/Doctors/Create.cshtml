@@ -5,13 +5,20 @@
 @model DoctorsOffice.Models.Doctor
 @using DoctorsOffice.Models
 
+<p><strong>Note:</strong>You need to have at least one specialty before you can add a doctor.</p>
+<p>Go to @Html.ActionLink("this page", "Create", "Specialties") to create a specialty.</p>
+
 <h4>Add a new doctor</h4>
 @using (Html.BeginForm())
 {
   @Html.LabelFor(model => model.Name)
   @Html.TextBoxFor(model => model.Name)
   <br>
+  @Html.Label("Select specialty")
+  @Html.DropDownList("SpecialtyId")
   <input type="submit" value="Add new doctor" class="btn btn-primary"/>
 }
 <br>
 <p>@Html.ActionLink("Back to doctors list", "Index")</p>
+<p>@Html.ActionLink("Back to specialties list", "Index", "Specialties")</p>
+<p>@Html.ActionLink("Home", "Index", "Home")</p>

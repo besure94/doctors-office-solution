@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Http.Features;
+using System;
 
 namespace DoctorsOffice.Controllers
 {
@@ -36,10 +37,8 @@ namespace DoctorsOffice.Controllers
       }
       else
       {
-        // specialty.DoctorId = 0;
         _db.Specialties.Add(specialty);
         _db.SaveChanges();
-        // _db.DoctorSpecialties.Add(new DoctorSpecialty() { DoctorId = specialty.DoctorId, SpecialtyId = specialty.SpecialtyId });
         return RedirectToAction("Index");
       }
     }
@@ -51,6 +50,27 @@ namespace DoctorsOffice.Controllers
       .ThenInclude(specialty => specialty.Doctor)
       .FirstOrDefault(specialty => specialty.SpecialtyId == id);
       return View(thisSpecialty);
+    }
+
+    public ActionResult AddDoctor(int id)
+    {
+      Specialty thisSpecialty = _db.Specialties.FirstOrDefault(specialties => specialties.SpecialtyId == id);
+      ViewBag.DoctorId = new SelectList(_db.Doctors, "DoctorId", "Name");
+      return View(thisSpecialty);
+    }
+
+    [HttpPost]
+    public ActionResult AddDoctor(Specialty specialty, int doctorId)
+    {
+      #nullable enable
+      DoctorSpecialty? joinClass = _db.DoctorSpecialties.FirstOrDefault(join => join.DoctorId == doctorId && join.SpecialtyId == specialty.SpecialtyId);
+      #nullable disable
+      if (joinClass == null && doctorId != 0)
+      {
+        _db.DoctorSpecialties.Add(new DoctorSpecialty() { DoctorId = doctorId, SpecialtyId = specialty.SpecialtyId });
+        _db.SaveChanges();
+      }
+      return RedirectToAction("Details", new { id = specialty.SpecialtyId });
     }
   }
 }

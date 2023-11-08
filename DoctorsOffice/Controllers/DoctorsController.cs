@@ -3,6 +3,7 @@ using DoctorsOffice.Models;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DoctorsOffice.Controllers
 {
@@ -22,12 +23,14 @@ namespace DoctorsOffice.Controllers
 
     public ActionResult Create()
     {
+      ViewBag.SpecialtyId = new SelectList(_db.Specialties, "SpecialtyId", "Title");
       return View();
     }
 
     [HttpPost]
     public ActionResult Create(Doctor doctor)
     {
+
       if (doctor.Name == null)
       {
         return RedirectToAction("Create");
@@ -36,6 +39,7 @@ namespace DoctorsOffice.Controllers
       {
         _db.Doctors.Add(doctor);
         _db.SaveChanges();
+        // _db.DoctorSpecialties.Add(new DoctorSpecialty() { SpecialtyId = doctor.SpecialtyId, DoctorId = doctor.DoctorId });
         return RedirectToAction("Index");
       }
     }
