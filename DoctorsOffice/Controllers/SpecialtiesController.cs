@@ -43,5 +43,14 @@ namespace DoctorsOffice.Controllers
         return RedirectToAction("Index");
       }
     }
+
+    public ActionResult Details(int id)
+    {
+      Specialty thisSpecialty = _db.Specialties
+      .Include(specialty => specialty.JoinClasses)
+      .ThenInclude(specialty => specialty.Doctor)
+      .FirstOrDefault(specialty => specialty.SpecialtyId == id);
+      return View(thisSpecialty);
+    }
   }
 }

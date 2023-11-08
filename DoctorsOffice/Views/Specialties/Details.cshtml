@@ -1,0 +1,28 @@
+@{
+  Layout = "_Layout";
+}
+
+@model DoctorsOffice.Models.Specialty
+@using DoctorsOffice.Models
+@using System.Collections.Generic;
+
+<h2>Specialty Details</h2>
+<hr/>
+<h3>@Html.DisplayNameFor(model => model.Title): @Html.DisplayFor(model => model.Title)</h3>
+
+@if (@Model.JoinClasses.Count == 0)
+{
+  <h3>This specialty does not have any doctors.</h3>
+}
+else
+{
+  <h4>Doctors who have this specialty:</h4>
+  <ul>
+    @foreach (DoctorSpecialty join in Model.JoinClasses)
+    {
+      <li>@join.Doctor.Name</li>
+    }
+  </ul>
+}
+<p>@Html.ActionLink("Add new doctor", "Create", "Doctors")</p>
+<p>@Html.ActionLink("Back to specialties list", "Index")</p>
