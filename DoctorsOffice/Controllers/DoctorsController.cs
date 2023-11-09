@@ -18,7 +18,10 @@ namespace DoctorsOffice.Controllers
 
     public ActionResult Index()
     {
-      List<Doctor> model = _db.Doctors.ToList();
+      List<Doctor> model = _db.Doctors
+      .Include(patient => patient.JoinEntities)
+      .ThenInclude(doctor => doctor.Patient)
+      .ToList();
       return View(model);
     }
 
@@ -57,5 +60,6 @@ namespace DoctorsOffice.Controllers
       .FirstOrDefault(doctor => doctor.DoctorId == id);
       return View(thisDoctor);
     }
+
   }
 }

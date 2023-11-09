@@ -14,9 +14,10 @@
 <ul>
   @foreach (Doctor doctor in Model)
   {
-    <li>@Html.ActionLink($"{doctor.Name}", "Details", new { id = doctor.DoctorId })</li>
+    <li>@Html.ActionLink($"{doctor.Name}", "Details", new { id = doctor.DoctorId }) | This doctor is currently seeing @doctor.JoinEntities.Count patients.</li>
   }
 </ul>
 
 <p>@Html.ActionLink("Add new doctor", "Create")</p>
+<p>@Html.ActionLink("View patient count for each doctor", "PatientCount")</p>
 <p>@Html.ActionLink("Home", "Index", "Home")</p>
